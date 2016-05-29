@@ -1,0 +1,25 @@
+{
+    "name": "my_gulp",
+    "version": "0.1.0",
+    "description": "my essential gulp plugins",
+    "license": "MIT",
+    "author": "Denys Danchuk <beebeekei@gmail.com>",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:beebeekei/my_gulp.git"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "beepbeep": "^1.2.0",
+        "gulp": "^3.9.1",
+        "gulp-consolidate": "^0.2.0",
+        "gulp-iconfont": "^1.0.0",
+        "gulp-rename": "^1.2.2",
+        "gulp-sass": "^2.3.1",
+        "gulp-sourcemaps": "^1.6.0",
+        "gulp.spritesmith": "^6.2.1",
+        "lodash": "^4.13.1"
+    }
+}
