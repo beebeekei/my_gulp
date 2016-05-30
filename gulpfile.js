@@ -32,7 +32,6 @@ var settings = {
         password: 'password',
         host: 'host_address',
         port: 21,
-        localFilesGlob: ['upload/**/*'],
         remoteFolder: '.',
         localWatchFolder: './upload'
     }
@@ -119,7 +118,7 @@ gulp.task('ftp-deploy', function() {
 
     var conn = getFtpConnection();
 
-    return gulp.src(settings.vinylFtp.localFilesGlob, { base: settings.vinylFtp.localWatchFolder, buffer: false })
+    return gulp.src([settings.vinylFtp.localWatchFolder + '/**/*'], { base: settings.vinylFtp.localWatchFolder, buffer: false })
         .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files 
         .pipe(conn.dest(settings.vinylFtp.remoteFolder));
 });
@@ -134,7 +133,7 @@ gulp.task('ftp-deploy-watch', function() {
 
     var conn = getFtpConnection();
 
-    gulp.watch(settings.vinylFtp.localFilesGlob)
+    gulp.watch([settings.vinylFtp.localWatchFolder + '/**/*'])
         .on('change', function(event) {
             console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
 
