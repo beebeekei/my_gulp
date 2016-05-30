@@ -10,72 +10,78 @@ var gulp = require('gulp'),
 ;
 
 var settings = {
-    sassInput: './scss/**/*.scss',
-    sassOutput: './css',
-    iconFontInput: './fonts/icons/',
-    iconFontTemplates: './scss/global/',
-    iconFontOutput: './fonts/',
-    iconFontName: 'iconFontName',
-    spriteInput: './images/sprite/*.*',
-    spriteOutputImage: './images/',
-    spriteOutputSass: './scss/global/'
+    sass: {
+        input: './scss/**/*.scss',
+        output: './css'
+    },
+    iconfont: {
+        input: './fonts/icons/',
+        templates: './scss/global/',
+        output: './fonts/',
+        fontName: 'iconFontName'
+    },
+    spritesmith: {
+        input: './images/sprite/*.*',
+        outputImage: './images/',
+        outputSass: './scss/global/'
+    }
 }
 
 gulp.task('default', function() {
-    gulp.src(settings.sassInput)
+    gulp.src(settings.sass.input)
     .pipe(sourcemaps.init())
     .pipe(sass({
-        outFile: settings.sassOutput,
+        outFile: settings.sass.output,
         outputStyle: 'expanded'
     }))
     .on('end', function() {
         process.argv[process.argv.length-1] == '--beep' ? beep() : console.log('success');
     })
     .pipe(sourcemaps.write('../css')) //path relative to the gulp.dest()
-    .pipe(gulp.dest(settings.sassOutput));
+    .pipe(gulp.dest(settings.sass.output));
 });
 
 gulp.task('sasswatch', function() {
-    gulp.watch(settings.sassInput, ['default']);
+    gulp.watch(settings.sass.input, ['default']);
 });
 
 gulp.task('iconfont', function() {
-    gulp.src([settings.iconFontInput + '*.svg'])
+    gulp.src([settings.iconfont.input + '*.svg'])
         .pipe(iconfont({
-            fontName: settings.iconFontName, // required
+            fontName: settings.iconfont.fontName, // required
             appendCodepoints: true, // recommended option
             normalize: true
         }))
         .on('codepoints', function(codepoints, options) {
-            gulp.src(settings.iconFontTemplates + '_icons.tpl')
+            gulp.src(settings.iconfont.templates + '_icons.tpl')
                 .pipe(
                     consolidate('lodash', {
                         fontName: options.fontName,
                         glyphs: codepoints
                     }))
                 .pipe(rename('_icons.scss'))
-                .pipe(gulp.dest(settings.iconFontTemplates));
-            gulp.src(settings.iconFontTemplates + '_fonts.tpl')
+                .pipe(gulp.dest(settings.iconfont.templates));
+            gulp.src(settings.iconfont.templates + '_fonts.tpl')
                 .pipe(
                     consolidate('lodash', {
                         fontPath: '../fonts/',
                         fontName: options.fontName,
                     }))
                 .pipe(rename('_fonts_icons.scss'))
-                .pipe(gulp.dest(settings.iconFontTemplates));
+                .pipe(gulp.dest(settings.iconfont.templates));
         })
-        .pipe(gulp.dest(settings.iconFontOutput));
+        .pipe(gulp.dest(settings.iconfont.output));
 });
 
 gulp.task('sprite', function() {
     var spriteData =
-        gulp.src(settings.spriteInput)
+        gulp.src(settings.spritesmith.input)
             .pipe(spritesmith({
                 imgName: 'sprite.png',
                 cssName: '_sprites.scss',
                 cssFormat: 'scss',
                 padding: 2
             }));
-    spriteData.img.pipe(gulp.dest(settings.spriteOutputImage));
-    spriteData.css.pipe(gulp.dest(settings.spriteOutputSass));
+    spriteData.img.pipe(gulp.dest(settings.spritesmith.outputImage));
+    spriteData.css.pipe(gulp.dest(settings.spritesmith.outputSass));
 });
