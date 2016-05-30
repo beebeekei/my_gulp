@@ -28,3 +28,9 @@ https://www.npmjs.com/package/gulp-rename
 - *gulp.spritesmith*:  
 https://github.com/twolfson/gulp.spritesmith  
 https://www.npmjs.com/package/gulp.spritesmith  
+- *gulp-util*:  
+https://github.com/gulpjs/gulp-util  
+https://www.npmjs.com/package/gulp-util  
+- *vinyl-ftp*:  
+https://github.com/morris/vinyl-ftp  
+https://www.npmjs.com/package/vinyl-ftp  

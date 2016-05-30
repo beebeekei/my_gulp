@@ -6,7 +6,9 @@ var gulp = require('gulp'),
     consolidate = require('gulp-consolidate'),
     lodash = require('lodash'),
     rename = require('gulp-rename'),
-    spritesmith = require('gulp.spritesmith')
+    spritesmith = require('gulp.spritesmith'),
+    gutil = require('gulp-util'),
+    ftp = require('vinyl-ftp')    
 ;
 
 var settings = {
@@ -24,6 +26,15 @@ var settings = {
         input: './images/sprite/*.*',
         outputImage: './images/',
         outputSass: './scss/global/'
+    },
+    vinylFtp: {
+        user: 'user_name',
+        password: 'password',
+        host: 'host_address',
+        port: 21,
+        localFilesGlob: ['upload/**/*'],
+        remoteFolder: '.',
+        localWatchFolder: './upload'
     }
 }
 
@@ -84,4 +95,51 @@ gulp.task('sprite', function() {
             }));
     spriteData.img.pipe(gulp.dest(settings.spritesmith.outputImage));
     spriteData.css.pipe(gulp.dest(settings.spritesmith.outputSass));
+});
+
+// helper function to build an FTP connection based on our configuration
+function getFtpConnection() {
+    return ftp.create({
+        host: settings.vinylFtp.host,
+        port: settings.vinylFtp.port,
+        user: settings.vinylFtp.user,
+        password: settings.vinylFtp.password,
+        parallel: 5,
+        log: gutil.log
+    });
+}
+
+/**
+ * Deploy task.
+ * Copies the new files to the server
+ *
+ * Usage: `FTP_USER=someuser FTP_PWD=somepwd gulp ftp-deploy`
+ */
+gulp.task('ftp-deploy', function() {
+
+    var conn = getFtpConnection();
+
+    return gulp.src(settings.vinylFtp.localFilesGlob, { base: settings.vinylFtp.localWatchFolder, buffer: false })
+        .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files 
+        .pipe(conn.dest(settings.vinylFtp.remoteFolder));
+});
+
+/**
+ * Watch deploy task.
+ * Watches the local copy for changes and copies the new files to the server whenever an update is detected
+ *
+ * Usage: `FTP_USER=someuser FTP_PWD=somepwd gulp ftp-deploy-watch`
+ */
+gulp.task('ftp-deploy-watch', function() {
+
+    var conn = getFtpConnection();
+
+    gulp.watch(settings.vinylFtp.localFilesGlob)
+        .on('change', function(event) {
+            console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
+
+            return gulp.src([event.path], { base: settings.vinylFtp.localWatchFolder, buffer: false })
+                .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files 
+                .pipe(conn.dest(settings.vinylFtp.remoteFolder));
+        });
 });

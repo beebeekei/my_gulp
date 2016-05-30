@@ -1,6 +1,6 @@
 {
     "name": "my_gulp",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "my essential gulp plugins",
     "license": "MIT",
     "author": "Denys Danchuk <beebeekei@gmail.com>",
@@ -19,7 +19,9 @@
         "gulp-rename": "^1.2.2",
         "gulp-sass": "^2.3.1",
         "gulp-sourcemaps": "^1.6.0",
+        "gulp-util": "^3.0.7",
         "gulp.spritesmith": "^6.2.1",
-        "lodash": "^4.13.1"
+        "lodash": "^4.13.1",
+        "vinyl-ftp": "^0.4.5"
     }
 }
