@@ -96,6 +96,8 @@ gulp.task('sprite', function() {
     spriteData.css.pipe(gulp.dest(settings.spritesmith.outputSass));
 });
 
+// http://loige.co/gulp-and-ftp-update-a-website-on-the-fly/
+
 // helper function to build an FTP connection based on our configuration
 function getFtpConnection() {
     return ftp.create({
