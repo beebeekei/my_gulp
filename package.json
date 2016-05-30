@@ -1,6 +1,6 @@
 {
     "name": "my_gulp",
-    "version": "0.2.2",
+    "version": "1.0.0",
     "description": "my essential gulp plugins",
     "license": "MIT",
     "author": "Denys Danchuk <beebeekei@gmail.com>",
@@ -23,5 +23,30 @@
         "gulp.spritesmith": "^6.2.1",
         "lodash": "^4.13.1",
         "vinyl-ftp": "^0.4.5"
-    }
+    },
+    "settings": {
+        "sass": {
+            "input": "./scss/**/*.scss",
+            "output": "./css"
+        },
+        "iconfont": {
+            "input": "./fonts/icons/",
+            "templates": "./scss/global/",
+            "output": "./fonts/",
+            "fontName": "iconFontName"
+        },
+        "spritesmith": {
+            "input": "./images/sprite/*.*",
+            "outputImage": "./images/",
+            "outputSass": "./scss/global/"
+        },
+        "vinylFtp": {
+            "user": "user_name",
+            "password": "password",
+            "host": "host_address",
+            "port": "21",
+            "remoteFolder": ".",
+            "localWatchFolder": "./upload"
+        }
+    }    
 }

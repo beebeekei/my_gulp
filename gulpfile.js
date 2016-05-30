@@ -11,31 +11,7 @@ var gulp = require('gulp'),
     ftp = require('vinyl-ftp')    
 ;
 
-var settings = {
-    sass: {
-        input: './scss/**/*.scss',
-        output: './css'
-    },
-    iconfont: {
-        input: './fonts/icons/',
-        templates: './scss/global/',
-        output: './fonts/',
-        fontName: 'iconFontName'
-    },
-    spritesmith: {
-        input: './images/sprite/*.*',
-        outputImage: './images/',
-        outputSass: './scss/global/'
-    },
-    vinylFtp: {
-        user: 'user_name',
-        password: 'password',
-        host: 'host_address',
-        port: 21,
-        remoteFolder: '.',
-        localWatchFolder: './upload'
-    }
-}
+var settings = require('./package.json').settings;
 
 gulp.task('default', function() {
     gulp.src(settings.sass.input)
