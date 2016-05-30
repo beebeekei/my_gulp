@@ -8,7 +8,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     spritesmith = require('gulp.spritesmith'),
     gutil = require('gulp-util'),
-    ftp = require('vinyl-ftp')    
+    ftp = require('vinyl-ftp')
 ;
 
 var settings = require('./package.json').settings;
@@ -97,7 +97,7 @@ gulp.task('ftp-deploy', function() {
     var conn = getFtpConnection();
 
     return gulp.src([settings.vinylFtp.localWatchFolder + '/**/*'], { base: settings.vinylFtp.localWatchFolder, buffer: false })
-        .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files 
+        .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files
         .pipe(conn.dest(settings.vinylFtp.remoteFolder));
 });
 
@@ -116,7 +116,7 @@ gulp.task('ftp-deploy-watch', function() {
             console.log('Changes detected! Uploading file "' + event.path + '", ' + event.type);
 
             return gulp.src([event.path], { base: settings.vinylFtp.localWatchFolder, buffer: false })
-                .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files 
+                .pipe(conn.newer(settings.vinylFtp.remoteFolder)) // only upload newer files
                 .pipe(conn.dest(settings.vinylFtp.remoteFolder));
         });
 });
