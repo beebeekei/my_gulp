@@ -4,7 +4,6 @@ var gulp = require('gulp'),
     beep = require('beepbeep'),
     iconfont = require('gulp-iconfont'),
     consolidate = require('gulp-consolidate'),
-    lodash = require('lodash'),
     rename = require('gulp-rename'),
     spritesmith = require('gulp.spritesmith'),
     gutil = require('gulp-util'),
@@ -32,22 +31,23 @@ gulp.task('sasswatch', function() {
 });
 
 gulp.task('iconfont', function() {
-    gulp.src([settings.iconfont.input + '*.svg'])
+    return gulp.src([settings.iconfont.input + '*.svg'])
         .pipe(iconfont({
             fontName: settings.iconfont.fontName, // required
-            appendCodepoints: true, // recommended option
-            normalize: true
+            normalize: true,
+            formats: ['ttf', 'eot', 'woff', 'svg'],
+            prependUnicode: true // recommended option
         }))
-        .on('codepoints', function(codepoints, options) {
-            gulp.src(settings.iconfont.templates + '_icons.tpl')
+        .on('glyphs', function(glyphs, options) {
+            gulp.src(settings.iconfont.templates + '_icons.tpl') //template taken from V.Ulanov
                 .pipe(
                     consolidate('lodash', {
-                        fontName: options.fontName,
-                        glyphs: codepoints
+                        glyphs: glyphs,
+                        fontName: options.fontName
                     }))
                 .pipe(rename('_icons.scss'))
                 .pipe(gulp.dest(settings.iconfont.templates));
-            gulp.src(settings.iconfont.templates + '_fonts.tpl')
+            gulp.src(settings.iconfont.templates + '_fonts.tpl') //template taken from V.Ulanov
                 .pipe(
                     consolidate('lodash', {
                         fontPath: '../fonts/',
