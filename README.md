@@ -31,3 +31,6 @@ https://www.npmjs.com/package/gulp-util
 - *vinyl-ftp*:  
 https://github.com/morris/vinyl-ftp  
 https://www.npmjs.com/package/vinyl-ftp  
+- *gulp-livereload*:  
+https://github.com/vohof/gulp-livereload  
+https://www.npmjs.com/package/gulp-livereload  

@@ -7,7 +7,8 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     spritesmith = require('gulp.spritesmith'),
     gutil = require('gulp-util'),
-    ftp = require('vinyl-ftp')
+    ftp = require('vinyl-ftp'),
+    livereload = require('gulp-livereload')
 ;
 
 var settings = require('./package.json').settings;
@@ -23,10 +24,12 @@ gulp.task('default', function() {
         process.argv[process.argv.length-1] == '--beep' ? beep() : console.log('success');
     })
     .pipe(sourcemaps.write('../css')) //path relative to the gulp.dest()
-    .pipe(gulp.dest(settings.sass.output));
+    .pipe(gulp.dest(settings.sass.output))
+    .pipe(livereload());
 });
 
 gulp.task('sasswatch', function() {
+    livereload.listen();
     gulp.watch(settings.sass.input, ['default']);
 });
 
