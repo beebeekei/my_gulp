@@ -34,3 +34,6 @@ https://www.npmjs.com/package/vinyl-ftp
 - *gulp-livereload*:  
 https://github.com/vohof/gulp-livereload  
 https://www.npmjs.com/package/gulp-livereload  
+- *gulp-svg-sprite*:  
+https://github.com/jkphl/gulp-svg-sprite  
+https://www.npmjs.com/package/gulp-svg-sprite  

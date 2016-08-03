@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     iconfont = require('gulp-iconfont'),
     consolidate = require('gulp-consolidate'),
     rename = require('gulp-rename'),
+    svgSprite = require('gulp-svg-sprite'),
     spritesmith = require('gulp.spritesmith'),
     gutil = require('gulp-util'),
     ftp = require('vinyl-ftp'),
@@ -60,6 +61,25 @@ gulp.task('iconfont', function() {
                 .pipe(gulp.dest(settings.iconfont.templates));
         })
         .pipe(gulp.dest(settings.iconfont.output));
+});
+
+gulp.task('svgsprite', function() {
+    config       = {
+        "mode": {
+            "css": {
+                "sprite": settings.svgsprite.svgOutput,
+                "render": {
+                    "scss": {
+                        "dest": settings.svgsprite.sassOutput
+                    }
+                }
+            }
+        }
+    };
+
+    return gulp.src('**/*.svg', {cwd: settings.svgsprite.svgInput})
+        .pipe(svgSprite(config)).on('error', function(error){ console.log(error); })
+        .pipe(gulp.dest(settings.svgsprite.outputMainDir))
 });
 
 gulp.task('sprite', function() {

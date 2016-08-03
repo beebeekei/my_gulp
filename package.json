@@ -1,6 +1,6 @@
 {
     "name": "my_gulp",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "my essential gulp plugins",
     "license": "MIT",
     "author": "Denys Danchuk <beebeekei@gmail.com>",
@@ -20,6 +20,7 @@
         "gulp-rename": "^1.2.2",
         "gulp-sass": "^2.3.1",
         "gulp-sourcemaps": "^1.6.0",
+        "gulp-svg-sprite": "^1.3.3",
         "gulp-util": "^3.0.7",
         "gulp.spritesmith": "^6.2.1",
         "vinyl-ftp": "^0.4.5"
@@ -35,6 +36,12 @@
             "output": "./fonts/",
             "fontName": "iconFontName"
         },
+        "svgsprite": {
+            "svgOutput": "../images/svg-sprite",
+            "sassOutput": "../scss/global/_svg-sprite",
+            "svgInput": "images/svg",
+            "outputMainDir": "."
+        },
         "spritesmith": {
             "input": "./images/sprite/*.*",
             "outputImage": "./images/",
@@ -46,7 +53,7 @@
             "host": "host_address",
             "port": "21",
             "remoteFolder": ".",
-            "localWatchFolder": "./upload"
+            "localWatchFolder": "."
         }
     }
 }
