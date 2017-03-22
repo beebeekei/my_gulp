@@ -37,6 +37,6 @@ https://www.npmjs.com/package/gulp-livereload
 - *gulp-plumber*:  
 https://github.com/floatdrop/gulp-plumber  
 https://www.npmjs.com/package/gulp-plumber  
-- *gulp-notify *:  
+- *gulp-notify*:  
 https://github.com/mikaelbr/gulp-notify  
 https://www.npmjs.com/package/gulp-notify  
