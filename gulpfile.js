@@ -16,7 +16,7 @@ var gulp = require('gulp'),
 
 var settings = require('./package.json').settings;
 
-gulp.task('default', function() {
+gulp.task('sass', function() {
     var onError = function(err) {
         notify.onError({
                     title:    "Gulp",
@@ -44,7 +44,7 @@ gulp.task('default', function() {
 
 gulp.task('sasswatch', function() {
     livereload.listen();
-    gulp.watch(settings.sass.input, ['default']);
+    gulp.watch(settings.sass.input, ['sass']);
 });
 
 gulp.task('iconfont', function() {
