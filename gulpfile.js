@@ -9,13 +9,26 @@ var gulp = require('gulp'),
     spritesmith = require('gulp.spritesmith'),
     gutil = require('gulp-util'),
     ftp = require('vinyl-ftp'),
-    livereload = require('gulp-livereload')
+    livereload = require('gulp-livereload'),
+    notify = require('gulp-notify'),
+    plumber = require('gulp-plumber')
 ;
 
 var settings = require('./package.json').settings;
 
 gulp.task('default', function() {
+    var onError = function(err) {
+        notify.onError({
+                    title:    "Gulp",
+                    subtitle: "Failure!",
+                    message:  "Error: <%= error.message %>",
+                    sound:    "Beep"
+                })(err);
+
+        this.emit('end');
+    };
     gulp.src(settings.sass.input)
+    .pipe(plumber({errorHandler: onError}))
     .pipe(sourcemaps.init())
     .pipe(sass({
         outFile: settings.sass.output,
