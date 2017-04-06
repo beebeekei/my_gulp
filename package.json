@@ -1,6 +1,6 @@
 {
     "name": "my_gulp",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "description": "my essential gulp plugins",
     "license": "MIT",
     "author": "Denys Danchuk <beebeekei@gmail.com>",
@@ -16,6 +16,7 @@
         "gulp": "^3.9.1",
         "gulp-consolidate": "^0.2.0",
         "gulp-iconfont": "^8.0.0",
+        "gulp-iconfont-css": "^2.1.0",
         "gulp-livereload": "^3.8.1",
         "gulp-notify": "^3.0.0",
         "gulp-plumber": "^1.1.0",
@@ -34,8 +35,9 @@
         },
         "iconfont": {
             "input": "./fonts/icons/",
-            "templates": "./scss/global/",
-            "output": "./fonts/",
+            "template": "./scss/global/",
+            "outputFont": "./fonts/",
+            "outputScss": "../scss/global/",
             "fontName": "iconFontName"
         },
         "spritesmith": {

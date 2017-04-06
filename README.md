@@ -15,7 +15,10 @@ https://github.com/feross/beepbeep
 https://www.npmjs.com/package/beepbeep  
 - *gulp-iconfont*:  
 https://github.com/nfroidure/gulp-iconfont  
-https://www.npmjs.com/package/gulp-iconfont  
+https://www.npmjs.com/package/gulp-iconfont    
+- *gulp-iconfont-css*:  
+https://github.com/backflip/gulp-iconfont-css  
+https://www.npmjs.com/package/gulp-iconfont-css  
 - *gulp-consolidate*:  
 https://github.com/timrwood/gulp-consolidate  
 https://www.npmjs.com/package/gulp-consolidate  

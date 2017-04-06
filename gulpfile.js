@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     sass = require('gulp-sass'),
     beep = require('beepbeep'),
     iconfont = require('gulp-iconfont'),
+    iconfontCss = require('gulp-iconfont-css'),
     lodash = require('lodash'),
     consolidate = require('gulp-consolidate'),
     rename = require('gulp-rename'),
@@ -47,33 +48,25 @@ gulp.task('sasswatch', function() {
     gulp.watch(settings.sass.input, ['sass']);
 });
 
-gulp.task('iconfont', function() {
+gulp.task('iconfont', function(){
+    var runTimestamp = Math.round(Date.now()/1000);
+
     return gulp.src([settings.iconfont.input + '*.svg'])
-        .pipe(iconfont({
-            fontName: settings.iconfont.fontName, // required
+        .pipe(iconfontCss({
+            fontName: settings.iconfont.fontName,
+            path: settings.iconfont.template + '_iconfont.scss',
+            targetPath: settings.iconfont.outputScss + '_icons.scss',
+            fontPath: '../fonts/',
+            firstGlyph: 0xf120 // Codes for glyphs should be in area where are no icons by default on iOS and Android
+        })).pipe(iconfont({
+            fontName: settings.iconfont.fontName,
+            formats: ['svg', 'ttf', 'eot', 'woff', 'woff2'],
             normalize: true,
-            formats: ['ttf', 'eot', 'woff', 'svg'],
-            prependUnicode: true // recommended option
-        }))
-        .on('glyphs', function(glyphs, options) {
-            gulp.src(settings.iconfont.templates + '_icons.tpl') //template taken from V.Ulanov
-                .pipe(
-                    consolidate('lodash', {
-                        glyphs: glyphs,
-                        fontName: options.fontName
-                    }))
-                .pipe(rename('_icons.scss'))
-                .pipe(gulp.dest(settings.iconfont.templates));
-            gulp.src(settings.iconfont.templates + '_fonts.tpl') //template taken from V.Ulanov
-                .pipe(
-                    consolidate('lodash', {
-                        fontPath: '../fonts/',
-                        fontName: options.fontName,
-                    }))
-                .pipe(rename('_fonts_icons.scss'))
-                .pipe(gulp.dest(settings.iconfont.templates));
-        })
-        .pipe(gulp.dest(settings.iconfont.output));
+            prependUnicode: true,
+            fontHeight: 1001,
+            timestamp: runTimestamp
+        })).pipe(gulp.dest(settings.iconfont.outputFont));
+
 });
 
 gulp.task('sprite', function() {
